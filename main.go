@@ -23,7 +23,7 @@ func worker(ports <-chan int, res chan<- ScanResult, wg *sync.WaitGroup, ip stri
 		conn, err := net.DialTimeout("tcp", address, 1*time.Second)
 
 		if err != nil {
-			continue // Порт закрыт
+			continue
 		}
 		conn.SetReadDeadline(time.Now().Add(2 * time.Second))
 
@@ -94,7 +94,6 @@ func main() {
 	} else {
 		fmt.Printf("Открытые порты на %s:\n", *ip)
 		for _, result := range openPorts {
-			// Выводим порт. Если есть баннер, выводим и его!
 			if result.Banner != "" {
 				fmt.Printf("✓ Порт %d открыт [Сервис: %s]\n", result.Port, result.Banner)
 			} else {
